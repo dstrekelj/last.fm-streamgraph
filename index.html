@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Last.fm</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="navigation" class="closed">
+    <span id="status">?</span>
+    <span id="info">Create a streamgraph by submitting the form.</span>
+    <form id="app" action="">
+      <label for="user"></label>
+      <input type="text" id="user" name="user" value="bigidiot" />
+      <label for="from-year"></label>
+      <select id="from-year" name="from-year"><option selected>2015</option></select>
+      <label for="from-month"></label>
+      <select id="from-month" name="from-month"><option selected>01</option></select>
+      <label for="from-date"></label>
+      <select id="from-date" name="from-date"><option selected>01</option></select>
+      <label for="to-year"></label>
+      <select id="to-year" name="to-year"><option selected>2015</option></select>
+      <label for="to-month"></label>
+      <select id="to-month" name="to-month"><option selected>02</option></select>
+      <label for="to-date"></label>
+      <select id="to-date" name="to-date"><option selected>01</option></select>
+      <label for="limit"></label>
+      <input type="text" id="limit" name="limit" value="9"/>
+      <button type="submit" id="submit">Submit</button>
+    </form>
+  </div>
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="last.fm.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+</body>
+</html>

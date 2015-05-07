@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color: #222;
+  background-repeat: no-repeat;
+}
+
+svg {
+  background-color: rgba(255,255,255,1);
+  overflow-y: hidden;
+}
+
+#navigation {
+  background: #fff;
+  position:fixed;
+  left: 1em;
+  top: 1em;
+  padding: 1em;
+  overflow: hidden;
+  border: 0.5em solid #5FC3E4;
+  height: 1em;
+}
+
+#status {
+  font-family: monospace;
+  color: #fff;
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 0.8em;
+}
+
+#navigation.open > #status {
+  width: 0px;
+  height: 0px;
+  visibility: hidden;
+  transition: 
+}
+
+form {
+  -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+          box-sizing: border-box;
+  display: inline;
+}
+
+#navigation.open {
+  width: 1200px;
+  -webkit-transition: all 0.4s ease;
+}
+
+#navigation.closed {
+  background: #5FC3E4;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  -webkit-transition: all 0.4s ease;
+}
+
+#navigation.open > #info {
+  color: #222;
+  float: left;
+  width: 400px;
+  height: 100px;
+  margin-right: 1em;
+}
+
+#navigation.closed > #info {
+  visibility: hidden;
+}
+
+#navigation.closed form {
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: black;
+}
+
+.line {
+  fill: none;
+  stroke: blue;
+  stroke-width: 2px;
+}
+
+.tick text {
+  font-size: 16px;
+}
+
+.tick line {
+  opacity: 0.2;
+}

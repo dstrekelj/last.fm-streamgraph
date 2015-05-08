@@ -65,22 +65,20 @@ button {
   height: 160px;
   width: 160px;
   background-color: #5FC3E4;
-  border: 5px solid rgba(0, 0, 0, 0.2);
-  border-top: 0;
-  border-left: 0;
+  border: 0;
+  border-right: 8px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 8px solid rgba(0, 0, 0, 0.2);
   outline: none;
 }
 
 button:hover {
-  border: 3px solid rgba(0, 0, 0, 0.2);
-  border-top: 0;
-  border-left: 0;
+  border: 0;
+  border-right: 6px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 6px solid rgba(0, 0, 0, 0.2);
 }
 
 button:active {
-  border: 5px solid rgba(0, 0, 0, 0.2);
-  border-bottom: 0;
-  border-right: 0;
+  border: 0;
 }
 
 #graph {

@@ -101,6 +101,8 @@ var App = function() {
         dataY = 120,
         minX = Data[0].value[0].x,
         maxX = Data[0].value[Data[0].value.length - 1].x;
+    
+    if (!d3.select('svg').empty()) d3.select('svg').remove();
 
     var width = dataX * 32,
         height = parseInt(d3.select('#graph').style('height')),

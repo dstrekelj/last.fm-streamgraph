@@ -102,8 +102,8 @@ var App = function() {
         minX = Data[0].value[0].x,
         maxX = Data[0].value[Data[0].value.length - 1].x;
 
-    var width = dataX * 100,
-        height = document.body.clientHeight,
+    var width = dataX * 32,
+        height = parseInt(d3.select('#graph').style('height')),
         svg = d3.select(target).append('svg').attr({width: width, height: height});
 
     var x = d3.time.scale().domain([minX, maxX]).range([0, width]),
@@ -132,6 +132,8 @@ var App = function() {
       .y0(function(d) { return y(d.y0); })
       .y1(function(d) { return y(d.y0 + d.y); });
 
+    svg.append('g').call(xAxis).attr('class', 'axis').attr('transform', 'translate(0, 50)');
+    
     svg.selectAll('path')
       .data(stack(Data))
       .enter()
@@ -147,8 +149,6 @@ var App = function() {
       label.attr({x: mouse[0] + 20, y: mouse[1] + 20})
         .each(function() { this.parentNode.appendChild(this); });
     });
-    
-    svg.append('g').call(xAxis).attr('class', 'axis').attr('transform', 'translate(0, 50)');
   };
   
   var filterByPlays = function(Data, Limit) {

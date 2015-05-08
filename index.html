@@ -1,32 +1,172 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Last.fm</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>last.fm Streamgraph</title>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-  <div id="navigation" class="closed">
-    <span id="status">?</span>
-    <span id="info">Create a streamgraph by submitting the form.</span>
-    <form id="app" action="">
-      <label for="user"></label>
-      <input type="text" id="user" name="user" value="bigidiot" />
-      <label for="from-year"></label>
-      <select id="from-year" name="from-year"><option selected>2015</option></select>
-      <label for="from-month"></label>
-      <select id="from-month" name="from-month"><option selected>01</option></select>
-      <label for="from-date"></label>
-      <select id="from-date" name="from-date"><option selected>01</option></select>
-      <label for="to-year"></label>
-      <select id="to-year" name="to-year"><option selected>2015</option></select>
-      <label for="to-month"></label>
-      <select id="to-month" name="to-month"><option selected>02</option></select>
-      <label for="to-date"></label>
-      <select id="to-date" name="to-date"><option selected>01</option></select>
-      <label for="limit"></label>
-      <input type="text" id="limit" name="limit" value="9"/>
-      <button type="submit" id="submit">Submit</button>
+  <div id="nav">
+    <form id="parameters" action="">
+     <div class="group parameters">
+      <div class="group cell" id="parameters.user.limit">
+        <div>
+          <label for="user">Username:</label>
+          <input type="text" id="user" name="user" />
+        </div>
+        <div>
+          <label for="limit">Play limit:</label>
+          <input type="text" id="limit" name="limit" />
+        </div>
+      </div>
+      <div class="group cell" id="parameters.from.to">
+        <div>
+          <label for="">From:</label>
+          <select id="from.y" name="from.y">
+            <option selected>Year</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+            <option value="2004">2004</option>
+            <option value="2005">2005</option>
+            <option value="2006">2006</option>
+            <option value="2007">2007</option>
+            <option value="2008">2008</option>
+            <option value="2009">2009</option>
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+          </select>
+          <select id="from.m" name="from.m">
+            <option selected>Month</option>
+            <option value="0">Jan</option>
+            <option value="1">Feb</option>
+            <option value="2">Mar</option>
+            <option value="3">Apr</option>
+            <option value="4">May</option>
+            <option value="5">Jun</option>
+            <option value="6">Jul</option>
+            <option value="7">Aug</option>
+            <option value="8">Sep</option>
+            <option value="9">Oct</option>
+            <option value="10">Nov</option>
+            <option value="11">Dec</option>
+          </select>
+          <select id="from.d" name="from.d">
+            <option selected>Date</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select>
+        </div>
+        <div>
+          <label for="">To:</label>
+          <select id="to.y" name="to.y">
+            <option selected>Year</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+            <option value="2004">2004</option>
+            <option value="2005">2005</option>
+            <option value="2006">2006</option>
+            <option value="2007">2007</option>
+            <option value="2008">2008</option>
+            <option value="2009">2009</option>
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+          </select>
+          <select id="to.m" name="to.m">
+            <option selected>Month</option>
+            <option value="0">Jan</option>
+            <option value="1">Feb</option>
+            <option value="2">Mar</option>
+            <option value="3">Apr</option>
+            <option value="4">May</option>
+            <option value="5">Jun</option>
+            <option value="6">Jul</option>
+            <option value="7">Aug</option>
+            <option value="8">Sep</option>
+            <option value="9">Oct</option>
+            <option value="10">Nov</option>
+            <option value="11">Dec</option>
+          </select>
+          <select id="to.d" name="to.d">
+            <option selected>Date</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select>
+        </div>
+      </div>
+      </div>
+      <div class="group" id="parameters.submit">
+        <button type="submit">Go!</button>
+      </div>
     </form>
   </div>
+  <div id="graph"></div>
   <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script type="text/javascript" src="last.fm.js"></script>
   <script type="text/javascript" src="app.js"></script>

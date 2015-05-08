@@ -1,80 +1,102 @@
 body {
   margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  color: #222;
-  background-repeat: no-repeat;
+  font-family: 'Open Sans', sans-serif;
 }
 
-svg {
-  background-color: rgba(255,255,255,1);
-  overflow-y: hidden;
-}
-
-#navigation {
-  background: #fff;
-  position:fixed;
-  left: 1em;
-  top: 1em;
-  padding: 1em;
-  overflow: hidden;
-  border: 0.5em solid #5FC3E4;
-  height: 1em;
-}
-
-#status {
-  font-family: monospace;
-  color: #fff;
-  font-size: 2em;
-  font-weight: bold;
-  line-height: 0.8em;
-}
-
-#navigation.open > #status {
-  width: 0px;
-  height: 0px;
-  visibility: hidden;
-  transition: 
+#nav {
+  display: table;
 }
 
 form {
-  -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
-     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
-          box-sizing: border-box;
-  display: inline;
+  display: table;
+  margin: 1em;
+  line-height: 21pt;
 }
 
-#navigation.open {
-  width: 1200px;
-  -webkit-transition: all 0.4s ease;
+div.group {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
 }
 
-#navigation.closed {
-  background: #5FC3E4;
-  width: 1em;
-  height: 1em;
-  overflow: hidden;
-  -webkit-transition: all 0.4s ease;
+div.parameters {
+  border: 8px solid #5fc3e4;
+  border-right: 0;
 }
 
-#navigation.open > #info {
-  color: #222;
-  float: left;
-  width: 400px;
-  height: 100px;
-  margin-right: 1em;
+div.cell {
+  padding: 1em;
 }
 
-#navigation.closed > #info {
-  visibility: hidden;
+#parameters\.user\.limit label {
+  width: 90px;
 }
 
-#navigation.closed form {
+#parameters\.from\.to label {
+  width: 50px;
+}
+
+select, input {
+  border: 1px solid #5fc3e4;
+  padding: 2pt;
+  box-sizing: border-box;
+  vertical-align: text-bottom;
+}
+
+select {
+  width: 70px;
+}
+
+input {
+  width: 8em;
+}
+
+label {
+  text-align: left;
+  font-weight: 800;
+  font-size: 11pt;
+  display: block;
+}
+
+button {
+  color: #fff;
+  font-weight: 800;
+  font-size: 32pt;
+  height: 160px;
+  width: 160px;
+  background-color: #5FC3E4;
+  border: 5px solid rgba(0, 0, 0, 0.2);
+  border-top: 0;
+  border-left: 0;
+  outline: none;
+}
+
+button:hover {
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  border-top: 0;
+  border-left: 0;
+}
+
+button:active {
+  border: 5px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 0;
+  border-right: 0;
+}
+
+#graph {
+  height: 600px;
+  background: #eee;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+svg {
+  background-color: #fff;
 }
 
 .axis path, .axis line {
-  fill: none;
-  stroke: black;
+  stroke: #5fc3e4;
+  stroke-width: 4px;
 }
 
 .line {
@@ -84,6 +106,7 @@ form {
 }
 
 .tick text {
+  font-weight: 800;
   font-size: 16px;
 }
 

@@ -8,22 +8,22 @@
 </head>
 <body>
   <div id="nav">
-    <form id="parameters" action="">
+    <form name="parameters" id="parameters" action="">
      <div class="group parameters">
       <div class="group cell" id="parameters.user.limit">
         <div>
           <label for="user">Username:</label>
-          <input type="text" id="user" name="user" />
+          <input type="text" id="user" name="user" value="bigidiot" />
         </div>
         <div>
           <label for="limit">Play limit:</label>
-          <input type="text" id="limit" name="limit" />
+          <input type="text" id="limit" name="limit" value="10" />
         </div>
       </div>
       <div class="group cell" id="parameters.from.to">
         <div>
           <label for="">From:</label>
-          <select id="from.y" name="from.y">
+          <select id="fromY" name="fromY">
             <option selected>Year</option>
             <option value="2002">2002</option>
             <option value="2003">2003</option>
@@ -38,14 +38,14 @@
             <option value="2012">2012</option>
             <option value="2013">2013</option>
             <option value="2014">2014</option>
-            <option value="2015">2015</option>
+            <option value="2015" selected>2015</option>
           </select>
-          <select id="from.m" name="from.m">
+          <select id="fromM" name="fromM">
             <option selected>Month</option>
             <option value="0">Jan</option>
             <option value="1">Feb</option>
             <option value="2">Mar</option>
-            <option value="3">Apr</option>
+            <option value="3" selected>Apr</option>
             <option value="4">May</option>
             <option value="5">Jun</option>
             <option value="6">Jul</option>
@@ -55,9 +55,9 @@
             <option value="10">Nov</option>
             <option value="11">Dec</option>
           </select>
-          <select id="from.d" name="from.d">
+          <select id="fromD" name="fromD">
             <option selected>Date</option>
-            <option value="1">1</option>
+            <option value="1" selected>1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -92,7 +92,7 @@
         </div>
         <div>
           <label for="">To:</label>
-          <select id="to.y" name="to.y">
+          <select id="toY" name="toY">
             <option selected>Year</option>
             <option value="2002">2002</option>
             <option value="2003">2003</option>
@@ -107,15 +107,15 @@
             <option value="2012">2012</option>
             <option value="2013">2013</option>
             <option value="2014">2014</option>
-            <option value="2015">2015</option>
+            <option value="2015" selected>2015</option>
           </select>
-          <select id="to.m" name="to.m">
+          <select id="toM" name="toM">
             <option selected>Month</option>
             <option value="0">Jan</option>
             <option value="1">Feb</option>
             <option value="2">Mar</option>
             <option value="3">Apr</option>
-            <option value="4">May</option>
+            <option value="4" selected>May</option>
             <option value="5">Jun</option>
             <option value="6">Jul</option>
             <option value="7">Aug</option>
@@ -124,9 +124,9 @@
             <option value="10">Nov</option>
             <option value="11">Dec</option>
           </select>
-          <select id="to.d" name="to.d">
+          <select id="toD" name="toD">
             <option selected>Date</option>
-            <option value="1">1</option>
+            <option value="1" selected>1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>

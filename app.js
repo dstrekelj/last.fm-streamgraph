@@ -50,6 +50,9 @@ var App = function() {
     lfm.user.getRecentTracks(parameters, responseHandler);
   };
   
+  /**
+   * Handles the formatted string response and prepares the data for drawing.
+   */
   var responseHandler = function(Response) {
     console.log('Collecting data...');
     
@@ -88,28 +91,29 @@ var App = function() {
       lfm.user.getRecentTracks(parameters, responseHandler);
     } else {
       parameters.page = 1;
-      console.log(data);
       draw(data);
     }
   };
   
+  /**
+   * Draws the stramgraph.
+   * @param Data  The data to draw
+   */
   var draw = function(Data) {
-    Data = filterByPlays(Data, limit);
-
     var dataCount = Data.length,
         dataX = Data[0].value.length,
-        dataY = 120,
+        dataY = 160,
         minX = Data[0].value[0].x,
         maxX = Data[0].value[Data[0].value.length - 1].x;
     
     if (!d3.select('svg').empty()) d3.select('svg').remove();
 
-    var width = dataX * 32,
+    var width = (dataX * 32 < document.body.clientWidth) ? document.body.clientWidth : dataX * 32,
         height = parseInt(d3.select('#graph').style('height')),
         svg = d3.select(target).append('svg').attr({width: width, height: height});
 
     var x = d3.time.scale().domain([minX, maxX]).range([0, width]),
-        y = d3.scale.linear().domain([0, dataY]).range([100, height]),
+        y = d3.scale.linear().domain([0, dataY]).range([100, height-100]),
         c = d3.scale.linear().domain([0, dataCount - 1]).interpolate(d3.interpolateRgb).range(['#e55d87', '#5fc3e4']);
     
     var xAxis = d3.svg.axis()
@@ -117,6 +121,7 @@ var App = function() {
       .orient('top')
       .innerTickSize(-height)
       .outerTickSize(0)
+      .ticks(d3.time.week)
       .tickPadding(8)
       .tickFormat(d3.time.format('%d. %B'));
     
@@ -129,19 +134,23 @@ var App = function() {
       .y(function(d) { return d.y; });
 
     var area = d3.svg.area()
-      .interpolate('basis-open')
+      .interpolate('basis')
       .x(function(d, i) { return x(d.x); })
       .y0(function(d) { return y(d.y0); })
       .y1(function(d) { return y(d.y0 + d.y); });
 
-    svg.append('g').call(xAxis).attr('class', 'axis').attr('transform', 'translate(0, 50)');
+    svg.append('g')
+      .call(xAxis)
+      .attr({
+        class     : 'axis',
+        transform : 'translate(0, 50)'
+      });
     
     svg.selectAll('path')
       .data(stack(Data))
       .enter()
         .append('path')
         .attr('d', function(d) { return area(d.value); })
-        .style({'stroke': 'rgba(255,255,255,0.5)', 'stroke-width': 2})
         .style('fill', function(d, i) { return c(i); })
         .on('mouseover', function(d) { label.text(d.key); })
         .on('mouseleave', function() { label.text(''); });
@@ -153,6 +162,9 @@ var App = function() {
     });
   };
   
+  /**
+   * TODO: FIGURE OUT WHY THIS DOESN'T WORK!
+   */
   var filterByPlays = function(Data, Limit) {
     return Data = Data.filter(function(v) {
       for (var vi = 0; vi < v.value.length; vi++) {

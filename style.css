@@ -1,92 +1,51 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  color: #222;
-  background-repeat: no-repeat;
-}
+body { margin: 0; font-family: 'Open Sans', sans-serif; font-size: 12pt; overflow: hidden; }
 
-svg {
-  background-color: rgba(255,255,255,1);
-  overflow-y: hidden;
-}
+form { line-height: 22pt; }
 
-#navigation {
-  background: #fff;
-  position:fixed;
-  left: 1em;
-  top: 1em;
-  padding: 1em;
-  overflow: hidden;
-  border: 0.5em solid #5FC3E4;
-  height: 1em;
-}
+.table { display: table; }
 
-#status {
-  font-family: monospace;
+.cell { display: table-cell; text-align: center; vertical-align: middle; }
+
+.container { padding: 1em; }
+
+.content { height: 120px; max-width: 250px; }
+
+.border { border: 8px solid;}
+.border-red { border-color: #e55d87; }
+.border-blue { border-color: #5fc3e4; }
+
+input, select { border: 1px solid; padding: 2pt;}
+input { width: 8em; }
+select { width: 6em; }
+
+label { display: block; text-align: left; font-size: 11pt; font-weight: 800; }
+
+#go {
+  background-color: hsl(195, 71%, 73%);
   color: #fff;
-  font-size: 2em;
-  font-weight: bold;
-  line-height: 0.8em;
+  font-weight: 800;
+  font-size: 24pt;
+  box-sizing: content-box;
+  height: 100%;
+  width: 120px;
+  border: 0;
+  box-shadow: inset 0px -8px 0px rgba(0,0,0,0.3);
+  outline: none;
 }
 
-#navigation.open > #status {
-  width: 0px;
-  height: 0px;
-  visibility: hidden;
-  transition: 
-}
+#go > span { position: relative; top: -8px; }
 
-form {
-  -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
-     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
-          box-sizing: border-box;
-  display: inline;
-}
+#go:hover { background-color: hsl(195, 71%, 69%); box-shadow: inset 0px -4px 0px rgba(0,0,0,0.3); }
+#go:hover > span { position: relative; top: -4px; }
 
-#navigation.open {
-  width: 1200px;
-  -webkit-transition: all 0.4s ease;
-}
+#go:active { background-color: hsl(195, 71%, 63%); box-shadow: none; }
+#go:active > span { position: relative; top: 0px; }
 
-#navigation.closed {
-  background: #5FC3E4;
-  width: 1em;
-  height: 1em;
-  overflow: hidden;
-  -webkit-transition: all 0.4s ease;
-}
+#graph { height: 600px;}
 
-#navigation.open > #info {
-  color: #222;
-  float: left;
-  width: 400px;
-  height: 100px;
-  margin-right: 1em;
-}
 
-#navigation.closed > #info {
-  visibility: hidden;
-}
-
-#navigation.closed form {
-}
-
-.axis path, .axis line {
-  fill: none;
-  stroke: black;
-}
-
-.line {
-  fill: none;
-  stroke: blue;
-  stroke-width: 2px;
-}
-
-.tick text {
-  font-size: 16px;
-}
-
-.tick line {
-  opacity: 0.2;
-}
+.axis path, .axis line { stroke: #5fc3e4; stroke-width: 4px; }
+.line { fill: none; stroke: blue; stroke-width: 2px; }
+.tick text { font-weight: 800; font-size: 16px; }
+.tick line { opacity: 0.2; }
+path { stroke: rgba(255,255,255,0.3); stroke-width: 2; }

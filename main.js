@@ -1,16 +1,38 @@
-document.getElementById('navigation').addEventListener('mouseover', function(e) {
-  this.setAttribute('class', 'open');
-});
-
-document.getElementById('navigation').addEventListener('mouseout', function(e) {
-  this.setAttribute('class', 'closed');
-});
-
 var app = new App();
 
-document.getElementById('app').addEventListener('submit', function(e) {
-  e.preventDefault();
-  app.request({user: 'bigidiot', from: 1422748800, to: 1430438400, limit: 10});
-}, false);
+/**
+ * Parse form data into inline object.
+ * @param	form	HTML form
+ * @return	Form data as inline object
+ */
+function parseForm (Form) {
+	var formElements =	Form.elements,
+		formData =		{};
+	
+	for (var i = 0; i < formElements.length; i++) {
+		var element = formElements[i];
+		if (element.value !== "") {
+			formData[element.name] = element.value;
+		}
+	}
+	
+	return formData;
+};
 
-//app.request({user: 'bigidiot', from: 1422748800, to: 1430438400, limit: 10});
+function onClick(Event) {
+  Event.preventDefault();
+  var data  = parseForm(document.forms.namedItem('parameters')),
+      from  = new Date(Date.UTC(data.fromY, data.fromM, data.fromD)),
+      to    = new Date(Date.UTC(data.toY, data.toM, data.toD));
+  
+  var params = {
+    user  : data.user,
+    limit : data.limit,
+    from  : from.getTime() / 1000,
+    to    : to.getTime() / 1000
+  };
+  
+  app.request(params, '#graph');
+}
+
+document.getElementById('parameters').addEventListener('submit', onClick, false);

@@ -1,118 +1,51 @@
-body {
-  margin: 0;
-  font-family: 'Open Sans', sans-serif;
-}
+body { margin: 0; font-family: 'Open Sans', sans-serif; font-size: 12pt; overflow: hidden; }
 
-#nav {
-  display: table;
-}
+form { line-height: 22pt; }
 
-form {
-  display: table;
-  margin: 1em;
-  line-height: 21pt;
-}
+.table { display: table; }
 
-div.group {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-}
+.cell { display: table-cell; text-align: center; vertical-align: middle; }
 
-div.parameters {
-  border: 8px solid #5fc3e4;
-  border-right: 0;
-}
+.container { padding: 1em; }
 
-div.cell {
-  padding: 1em;
-}
+.content { height: 120px; max-width: 250px; }
 
-#parameters\.user\.limit label {
-  width: 90px;
-}
+.border { border: 8px solid;}
+.border-red { border-color: #e55d87; }
+.border-blue { border-color: #5fc3e4; }
 
-#parameters\.from\.to label {
-  width: 50px;
-}
+input, select { border: 1px solid; padding: 2pt;}
+input { width: 8em; }
+select { width: 6em; }
 
-select, input {
-  border: 1px solid #5fc3e4;
-  padding: 2pt;
-  box-sizing: border-box;
-  vertical-align: text-bottom;
-}
+label { display: block; text-align: left; font-size: 11pt; font-weight: 800; }
 
-select {
-  width: 70px;
-}
-
-input {
-  width: 8em;
-}
-
-label {
-  text-align: left;
-  font-weight: 800;
-  font-size: 11pt;
-  display: block;
-}
-
-button {
+#go {
+  background-color: hsl(195, 71%, 73%);
   color: #fff;
   font-weight: 800;
-  font-size: 32pt;
-  height: 160px;
-  width: 160px;
-  background-color: #5FC3E4;
+  font-size: 24pt;
+  box-sizing: content-box;
+  height: 100%;
+  width: 120px;
   border: 0;
-  border-right: 8px solid rgba(0, 0, 0, 0.4);
-  border-bottom: 8px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px -8px 0px rgba(0,0,0,0.3);
   outline: none;
 }
 
-button:hover {
-  border: 0;
-  border-right: 6px solid rgba(0, 0, 0, 0.4);
-  border-bottom: 6px solid rgba(0, 0, 0, 0.2);
-}
+#go > span { position: relative; top: -8px; }
 
-button:active {
-  border: 0;
-}
+#go:hover { background-color: hsl(195, 71%, 69%); box-shadow: inset 0px -4px 0px rgba(0,0,0,0.3); }
+#go:hover > span { position: relative; top: -4px; }
 
-#graph {
-  height: 600px;
-  background: #eee;
-  overflow-y: hidden;
-  overflow-x: auto;
-}
+#go:active { background-color: hsl(195, 71%, 63%); box-shadow: none; }
+#go:active > span { position: relative; top: 0px; }
 
-svg {
-  background-color: #fff;
-}
+#graph { height: 600px;}
 
-.axis path, .axis line {
-  stroke: #5fc3e4;
-  stroke-width: 4px;
-}
 
-.line {
-  fill: none;
-  stroke: blue;
-  stroke-width: 2px;
-}
-
-.tick text {
-  font-weight: 800;
-  font-size: 16px;
-}
-
-.tick line {
-  opacity: 0.2;
-}
-
-path {
-  stroke: rgba(255,255,255,0.3);
-  stroke-width: 2;
-}
+.axis path, .axis line { stroke: #5fc3e4; stroke-width: 4px; }
+.line { fill: none; stroke: blue; stroke-width: 2px; }
+.tick text { font-weight: 800; font-size: 16px; }
+.tick line { opacity: 0.2; }
+path { stroke: rgba(255,255,255,0.3); stroke-width: 2; }

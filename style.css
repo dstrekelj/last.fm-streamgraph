@@ -41,8 +41,9 @@ label { display: block; text-align: left; font-size: 11pt; font-weight: 800; }
 #go:active { background-color: hsl(195, 71%, 63%); box-shadow: none; }
 #go:active > span { position: relative; top: 0px; }
 
-#graph { height: 600px;}
+#loader { color: #e55d87; font-weight: 800; }
 
+#graph { height: 600px; }
 
 .axis path, .axis line { stroke: #5fc3e4; stroke-width: 4px; }
 .line { fill: none; stroke: blue; stroke-width: 2px; }

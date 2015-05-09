@@ -38,14 +38,23 @@ var App = function() {
     format  : 'json',
   });
   
+  var loadingIndicator = undefined;
+  
+  this.setLoadingIndicator = function(LoadingIndicator) {
+    loadingIndicator = LoadingIndicator;
+  };
+  
   this.request = function(Parameters, Target) {
     data = [];
     limit = Parameters.limit;
     target = Target || 'body';
     
-    parameters['user'] = Parameters.user;
-    parameters['from'] = Parameters.from;
-    parameters['to'] = Parameters.to;
+    parameters['user']  = Parameters.user;
+    parameters['from']  = Parameters.from;
+    parameters['to']    = Parameters.to;
+    parameters['page']  = 1;
+    
+    loadingIndicator.onStart();
     
     lfm.user.getRecentTracks(parameters, responseHandler);
   };
@@ -54,7 +63,7 @@ var App = function() {
    * Handles the formatted string response and prepares the data for drawing.
    */
   var responseHandler = function(Response) {
-    console.log('Collecting data...');
+    if (typeof loadingIndicator != 'undefined') loadingIndicator.onUpdate();
     
     var object  = JSON.parse(Response).recenttracks,
         tracks  = object.track,
@@ -90,7 +99,7 @@ var App = function() {
       parameters.page += 1;
       lfm.user.getRecentTracks(parameters, responseHandler);
     } else {
-      parameters.page = 1;
+      if (typeof loadingIndicator != 'undefined') loadingIndicator.onFinish();
       draw(data);
     }
   };

@@ -27,10 +27,11 @@ if (!Array.prototype.find) {
 }
 
 var App = function() {
-  var data        = [],
-      limit       = 0,
-      target      = 'body',
-      parameters  = {limit: 200, page: 1};
+  var data              = [],
+      limit             = 0,
+      target            = 'body',
+      parameters        = { limit: 200, page: 1 },
+      loadingIndicator  = undefined;
   
   var lfm = new LastFM({
     key     : 'b850afad537d9f0e53d131bd0bdf83d6',
@@ -38,8 +39,13 @@ var App = function() {
     format  : 'json',
   });
   
-  var loadingIndicator = undefined;
-  
+  /**
+   * Set loading indicator. The indicator's `onStart()` method is called when
+   * the request is made. The `onUpdate()` method is called when the response
+   * is handler. The `onFinish()` method is called when the process is done.
+   * 
+   * @param LoadingIndicator  Object that must have accessible `onStart()`, `onUpdate()`, and `onFinish()` methods
+   */
   this.setLoadingIndicator = function(LoadingIndicator) {
     loadingIndicator = LoadingIndicator;
   };
@@ -113,18 +119,19 @@ var App = function() {
     
     var dataCount = Data.length,
         dataX = Data[0].value.length,
-        dataY = 160,
+        dataY = doFindMaxY(Data),
         minX = Data[0].value[0].x,
         maxX = Data[0].value[Data[0].value.length - 1].x;
     
     if (!d3.select('svg').empty()) d3.select('svg').remove();
 
-    var width = (dataX * 32 < document.body.clientWidth) ? document.body.clientWidth : dataX * 32,
+    var width = (dataX * 32 < window.screen.availWidth) ? window.screen.availWidth : dataX * 32,
         height = parseInt(d3.select('#graph').style('height')),
+        axisHeight = 50,
         svg = d3.select(target).append('svg').attr({width: width, height: height});
 
     var x = d3.time.scale().domain([minX, maxX]).range([0, width]),
-        y = d3.scale.linear().domain([0, dataY]).range([100, height-100]),
+        y = d3.scale.linear().domain([0, dataY]).range([axisHeight, height]),
         c = d3.scale.linear().domain([0, dataCount - 1]).interpolate(d3.interpolateRgb).range(['#e55d87', '#5fc3e4']);
     
     var xAxis = d3.svg.axis()
@@ -154,7 +161,7 @@ var App = function() {
       .call(xAxis)
       .attr({
         class     : 'axis',
-        transform : 'translate(0, 50)'
+        transform : 'translate(0, ' + axisHeight + ')'
       });
     
     svg.selectAll('path')
@@ -171,35 +178,6 @@ var App = function() {
       label.attr({x: mouse[0] + 20, y: mouse[1] + 20})
         .each(function() { this.parentNode.appendChild(this); });
     });
-  };
-  
-  var doFilterByPlays = function(Data, Limit) {
-    var key   = 0,
-        keys  = Data.length,
-        val   = 0,
-        vals  = Data[0].value.length,
-        result = new Array();
-        
-    for (key; key < keys; key++) {
-      if (overLimit(Data[key].value, Limit)) result.push(Data[key]);
-    }
-    
-    return result;
-  };
-  
-  var overLimit = function(Values, Limit) {
-    var play  = 0,
-        plays = Values.length;
-    
-    for (play; play < plays; play++) {
-      if (Values[play].y > Limit) return true;
-    }
-    
-    return false;
-  };
-  
-  var defined = function(Object) {
-    return typeof Object != 'undefined';
   };
   
   var doDates = function(From, To) {
@@ -221,5 +199,64 @@ var App = function() {
     var local = new Date(Time * 1000),
         utc = new Date(Date.UTC(local.getFullYear(), local.getMonth(), local.getDate()));
     return {local: local, utc: utc};
+  };
+  
+  /**
+   * Filters data by play limit.
+   * @param   Data    Data to filter
+   * @param   Limit   Limit to impose (minimum play amount)
+   * @return  Array of artists with `value.y` > `Limit`
+   */
+  var doFilterByPlays = function(Data, Limit) {
+    var key   = 0,
+        keys  = Data.length,
+        result = new Array();
+        
+    for (key; key < keys; key++) {
+      if (overLimit(Data[key].value, Limit)) result.push(Data[key]);
+    }
+    
+    return result;
+  };
+  
+  var doFindMaxY = function(Data) {
+    var key   = 0,
+        keys  = Data.length,
+        val   = 0,
+        vals  = Data[0].value.length,
+        sum   = 0;
+    
+    for (val; val < vals; val++) {
+      var newSum = 0, key = 0;
+      
+      for (key; key < keys; key++) {
+        newSum += Data[key].value[val].y;
+      }
+      
+      if (newSum > sum) sum = newSum;
+    }
+    
+    return sum;
+  };  
+  
+  /**
+   * Checks if `Values` array has a value greater than `Limit`.
+   */
+  var overLimit = function(Values, Limit) {
+    var play  = 0,
+        plays = Values.length;
+    
+    for (play; play < plays; play++) {
+      if (Values[play].y > Limit) return true;
+    }
+    
+    return false;
+  };
+  
+  /**
+   * Checks if `Object` is not undefined.
+   */
+  var defined = function(Object) {
+    return typeof Object != 'undefined';
   };
 };

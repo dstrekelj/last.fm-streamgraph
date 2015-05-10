@@ -115,25 +115,42 @@ var App = function() {
    * @param Data  The data to draw
    */
   var draw = function(Data) {
+    // Filter data by plays
     Data = doFilterByPlays(Data, limit);
     
-    var dataCount = Data.length,
-        dataX = Data[0].value.length,
-        dataY = doFindMaxY(Data),
-        minX = Data[0].value[0].x,
-        maxX = Data[0].value[Data[0].value.length - 1].x;
+    // Get data ...about data?
+    var numberOfDays  = Data[0].value.length,
+        widthOfDay    = 40,
+        maxY          = doFindMaxY(Data),
+        minX          = Data[0].value[0].x,
+        maxX          = Data[0].value[Data[0].value.length - 1].x;
     
+    // If a graph already exists, remove and replace it
     if (!d3.select('svg').empty()) d3.select('svg').remove();
 
-    var width = (dataX * 32 < window.screen.availWidth) ? window.screen.availWidth : dataX * 32,
-        height = parseInt(d3.select('#graph').style('height')),
-        axisHeight = 50,
-        svg = d3.select(target).append('svg').attr({width: width, height: height});
+    // Dimensions, yo
+    var dataWidth   = numberOfDays * widthOfDay,
+        axisHeight  = 50,
+        width       = window.screen.availWidth,
+        height      = parseInt(d3.select('#graph').style('height'));
 
-    var x = d3.time.scale().domain([minX, maxX]).range([0, width]),
-        y = d3.scale.linear().domain([0, dataY]).range([axisHeight, height]),
-        c = d3.scale.linear().domain([0, dataCount - 1]).interpolate(d3.interpolateRgb).range(['#e55d87', '#5fc3e4']);
+    // SVG
+    var svg = d3.select(target)
+      .append('svg')
+      .attr({
+        width   : width,
+        height  : height
+      });
     
+    var group = svg.append('g'),
+        label = group.append('text');
+    
+    // Scales
+    var x = d3.time.scale().domain([minX, maxX]).range([0, (dataWidth < width) ? width : dataWidth]),
+        y = d3.scale.linear().domain([0, maxY]).range([axisHeight, height]),
+        c = d3.scale.linear().domain([0, Data.length - 1]).interpolate(d3.interpolateRgb).range(['#e55d87', '#5fc3e4']);
+    
+    // Axis
     var xAxis = d3.svg.axis()
       .scale(x)
       .orient('top')
@@ -143,39 +160,60 @@ var App = function() {
       .tickPadding(8)
       .tickFormat(d3.time.format('%d. %B'));
     
-    var label = svg.append('text');
-
+    // Stack
     var stack = d3.layout.stack()
       .offset('silhouette')
-      .values(function(d) { return d.value; })
-      .x(function(d, i) { return d.x; })
-      .y(function(d) { return d.y; });
-
+      .values(function stackValues(d) { return d.value; })
+      .x(function stackX(d, i) { return d.x; })
+      .y(function stackY(d) { return d.y; });
+    
+    // Area
     var area = d3.svg.area()
       .interpolate('basis')
-      .x(function(d, i) { return x(d.x); })
-      .y0(function(d) { return y(d.y0); })
-      .y1(function(d) { return y(d.y0 + d.y); });
+      .x(function areaX(d, i) { return x(d.x); })
+      .y0(function areaY0(d) { return y(d.y0); })
+      .y1(function areaY1(d) { return y(d.y0 + d.y); });
 
-    svg.append('g')
-      .call(xAxis)
-      .attr({
-        class     : 'axis',
-        transform : 'translate(0, ' + axisHeight + ')'
+    // Zoom
+    var zoom = d3.behavior.zoom()
+      .scaleExtent([1, 1])
+      .x(x)
+      .on('zoom', function onZoom() {
+        var e = d3.event,
+            tx = Math.max(Math.min(e.translate[0], 0), width - dataWidth),
+            ty = 0;
+        zoom.translate([tx, ty]);
+        group.attr('transform', 'translate(' + tx + ',' + ty + ')');
+        //svg.style('cursor', 'grabbing');
       });
     
-    svg.selectAll('path')
+    if (dataWidth > width) {
+      //svg.style('cursor', 'grab');
+      svg.call(zoom);
+    }
+    
+    group.append('g')
+      .call(xAxis)
+      .attr({
+        class      : 'axis',
+        transform  : 'translate(0,' + axisHeight + ')'
+      });
+    
+    group.selectAll('path')
       .data(stack(Data))
       .enter()
         .append('path')
-        .attr('d', function(d) { return area(d.value); })
-        .style('fill', function(d, i) { return c(i); })
+        .attr('d', function pathData(d) { return area(d.value); })
+        .style('fill', function pathFill(d, i) { return c(i); })
         .on('mouseover', function(d) { label.text(d.key); })
         .on('mouseleave', function() { label.text(''); });
-
-    svg.on('mousemove', function() {
+    
+    group.on('mousemove', function() {
       var mouse = d3.mouse(this);
-      label.attr({x: mouse[0] + 20, y: mouse[1] + 20})
+      label.attr({
+          x : mouse[0] + 20,
+          y : mouse[1] + 20
+        })
         .each(function() { this.parentNode.appendChild(this); });
     });
   };

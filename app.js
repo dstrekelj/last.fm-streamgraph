@@ -125,12 +125,13 @@ var App = function() {
     
     if (!d3.select('svg').empty()) d3.select('svg').remove();
 
-    var width = (dataX * 32 < document.body.clientWidth) ? document.body.clientWidth : dataX * 32,
+    var width = (dataX * 32 < window.screen.availWidth) ? window.screen.availWidth : dataX * 32,
         height = parseInt(d3.select('#graph').style('height')),
+        axisHeight = 50,
         svg = d3.select(target).append('svg').attr({width: width, height: height});
 
     var x = d3.time.scale().domain([minX, maxX]).range([0, width]),
-        y = d3.scale.linear().domain([0, dataY]).range([0, height]),
+        y = d3.scale.linear().domain([0, dataY]).range([axisHeight, height]),
         c = d3.scale.linear().domain([0, dataCount - 1]).interpolate(d3.interpolateRgb).range(['#e55d87', '#5fc3e4']);
     
     var xAxis = d3.svg.axis()
@@ -160,7 +161,7 @@ var App = function() {
       .call(xAxis)
       .attr({
         class     : 'axis',
-        transform : 'translate(0, 50)'
+        transform : 'translate(0, ' + axisHeight + ')'
       });
     
     svg.selectAll('path')

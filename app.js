@@ -109,6 +109,8 @@ var App = function() {
    * @param Data  The data to draw
    */
   var draw = function(Data) {
+    Data = doFilterByPlays(Data, limit);
+    
     var dataCount = Data.length,
         dataX = Data[0].value.length,
         dataY = 160,
@@ -171,16 +173,29 @@ var App = function() {
     });
   };
   
-  /**
-   * TODO: FIGURE OUT WHY THIS DOESN'T WORK!
-   */
-  var filterByPlays = function(Data, Limit) {
-    return Data = Data.filter(function(v) {
-      for (var vi = 0; vi < v.value.length; vi++) {
-        if (v.value[vi].y > Limit) return true;
-      }
-      return false;
-    });
+  var doFilterByPlays = function(Data, Limit) {
+    var key   = 0,
+        keys  = Data.length,
+        val   = 0,
+        vals  = Data[0].value.length,
+        result = new Array();
+        
+    for (key; key < keys; key++) {
+      if (overLimit(Data[key].value, Limit)) result.push(Data[key]);
+    }
+    
+    return result;
+  };
+  
+  var overLimit = function(Values, Limit) {
+    var play  = 0,
+        plays = Values.length;
+    
+    for (play; play < plays; play++) {
+      if (Values[play].y > Limit) return true;
+    }
+    
+    return false;
   };
   
   var defined = function(Object) {

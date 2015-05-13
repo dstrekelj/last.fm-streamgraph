@@ -45,6 +45,8 @@ label { display: block; text-align: left; font-size: 11pt; font-weight: 800; }
 
 #graph { height: 600px; }
 
+svg { shape-rendering: optimizeSpeed; }
+
 .axis path, .axis line { stroke: #5fc3e4; stroke-width: 4px; }
 .line { fill: none; stroke: blue; stroke-width: 2px; }
 .tick text { font-weight: 800; font-size: 16px; }

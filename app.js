@@ -69,7 +69,7 @@ var App = function() {
    * Handles the formatted string response and prepares the data for drawing.
    */
   var responseHandler = function(Response) {
-    if (typeof loadingIndicator != 'undefined') loadingIndicator.onUpdate();
+    if (defined(loadingIndicator)) loadingIndicator.onUpdate();
     
     var object  = JSON.parse(Response).recenttracks,
         tracks  = object.track,
@@ -105,7 +105,7 @@ var App = function() {
       parameters.page += 1;
       lfm.user.getRecentTracks(parameters, responseHandler);
     } else {
-      if (typeof loadingIndicator != 'undefined') loadingIndicator.onFinish();
+      if (defined(loadingIndicator)) loadingIndicator.onFinish();
       draw(data);
     }
   };
@@ -184,13 +184,9 @@ var App = function() {
             ty = 0;
         zoom.translate([tx, ty]);
         group.attr('transform', 'translate(' + tx + ',' + ty + ')');
-        //svg.style('cursor', 'grabbing');
       });
     
-    if (dataWidth > width) {
-      //svg.style('cursor', 'grab');
-      svg.call(zoom);
-    }
+    if (dataWidth > width) svg.call(zoom);
     
     group.append('g')
       .call(xAxis)

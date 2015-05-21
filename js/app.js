@@ -167,7 +167,7 @@ var App = function() {
         label = group.append('text');
     
     // Scales
-    var x = d3.time.scale().domain([minX, maxX]).range([0, (dataWidth < width) ? width : dataWidth]),
+    var x = d3.time.scale().domain([minX, maxX]).range([0, width]),
         y = d3.scale.linear().domain([0, maxY]).range([axisHeight, height]),
         c = d3.scale.linear().domain([0, Data.length - 1]).interpolate(d3.interpolateRgb).range(['#e55d87', '#5fc3e4']);
     
@@ -207,8 +207,6 @@ var App = function() {
         group.attr('transform', 'translate(' + tx + ',' + ty + ')');
       });
     
-    if (dataWidth > width) svg.call(zoom);
-    
     group.append('g')
       .call(xAxis)
       .attr({
@@ -220,6 +218,7 @@ var App = function() {
       .data(stack(Data))
       .enter()
         .append('path')
+        .attr('class', 'stream')
         .attr('d', function pathData(d) { return area(d.value); })
         .style('fill', function pathFill(d, i) { return c(i); })
         .on('mouseover', function(d) { label.text(d.key); })
@@ -233,6 +232,42 @@ var App = function() {
         })
         .each(function() { this.parentNode.appendChild(this); });
     });
+    
+    if (!d3.select('.d3-slider').empty()) {
+      d3.select('.d3-slider').remove();
+      d3.select('#content').append('div').attr('id', 'slider');
+    }
+    
+    // Slider
+    d3.select('#slider').call(
+      d3.slider().axis(false).value([0, numberOfDays - 1])
+        .on('slide', function onSlide(Event, Value) {
+          var daysToFirst  = Math.floor((Value[0] / 100) * numberOfDays),
+              daysToLast   = Math.floor((Value[1] / 100) * numberOfDays - 1),
+              dateFirst = doDatesPair(minX / 1000),
+              dateLast  = doDatesPair(minX / 1000);
+          
+          dateFirst.local.setDate(dateFirst.local.getDate() + daysToFirst);
+          dateFirst = doDatesPair(dateFirst.local.getTime() / 1000);
+          dateLast.local.setDate(dateLast.local.getDate() + daysToLast);
+          dateLast = doDatesPair(dateLast.local.getTime() / 1000);
+          
+          x.domain([dateFirst.utc.getTime(), dateLast.utc.getTime()]);
+          group.select('.axis').call(xAxis);
+         
+          d3.selectAll('.stream').remove();
+          
+          group.selectAll('.stream')
+            .data(stack(Data))
+            .enter()
+              .append('path')
+              .attr('class', 'stream')
+              .attr('d', function pathData(d) { return area(d.value); })
+              .style('fill', function pathFill(d, i) { return c(i); })
+              .on('mouseover', function(d) { label.text(d.key); })
+              .on('mouseleave', function() { label.text(''); });
+        })
+    );
   };
   
   var doDates = function(From, To) {

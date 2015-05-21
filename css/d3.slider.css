@@ -2,7 +2,7 @@
     position: relative;
     font-family: Verdana,Arial,sans-serif;
     font-size: 1.1em;
-    border: 1px solid #aaaaaa;
+    /*border: 1px solid #aaaaaa;*/
     z-index: 2;
 }
 
@@ -11,15 +11,15 @@
 }  
 
 .d3-slider-range {
-  background:#2980b9;
+  background:#5fc3e4;
   left:0px;
   right:0px;
-  height: 0.8em;
+  height: .8em;
   position: absolute;
 }
 
 .d3-slider-range-vertical {
-  background:#2980b9;
+  background:#5fc3e4;
   left:0px;
   right:0px;
   position: absolute;
@@ -35,15 +35,13 @@
     position: absolute;
     width: 1.2em;
     height: 1.2em;
-    border: 1px solid #d3d3d3;
-    border-radius: 4px;
-    background: #eee;
-    background: linear-gradient(to bottom, #eee 0%, #ddd 100%);
+    border: 1px solid #e55d87;
+    background: #e55d87;
     z-index: 3;
 }
 
 .d3-slider-handle:hover {
-    border: 1px solid #999999;
+    border: 1px solid #f66e98;
 }
 
 .d3-slider-horizontal .d3-slider-handle {
@@ -71,7 +69,6 @@
 
 .d3-slider-axis line {
     fill: none;
-    stroke: #aaa;
     shape-rendering: crispEdges;
 }
 

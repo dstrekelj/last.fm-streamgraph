@@ -80,7 +80,7 @@ var App = function() {
       parameters['to']    = Parameters.to;
       parameters['page']  = 1;
 
-      loadingIndicator.onStart();
+      if (defined(loadingIndicator)) loadingIndicator.onStart();
 
       lfm.user.getRecentTracks(parameters, responseHandler);
     }

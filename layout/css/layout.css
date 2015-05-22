@@ -1,0 +1,52 @@
+body { margin: 0; }
+
+.button {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  width: 64px;
+  height: 64px;
+}
+
+.menu {
+  opacity: 0;
+  position: fixed;
+  top: -100%;
+  display: table;
+}
+
+.visual {
+  background: #5fc3e4;
+  z-index: 1;
+}
+.visual:after {
+  content: '?';
+  position: absolute;
+  top: 30%;
+  left: 38%;
+  font-family: monospace;
+  font-size: 18pt;
+  color: #fff;
+}
+
+.toggle {
+  z-index: 2;
+  opacity: 0;
+}
+
+.toggle:checked + .visual {
+  background: #e55d87;
+}
+.toggle:checked + .visual:after {
+  content: 'X';
+}
+
+.toggle:checked ~ .menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;  
+  background: #5fc3e4;
+  opacity: .8;
+}

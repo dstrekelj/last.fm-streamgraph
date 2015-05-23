@@ -1,0 +1,93 @@
+@import url('http://fonts.googleapis.com/css?family=Raleway|Lato:400,700|Leckerli+One');
+
+$red1 = #e31b23
+$red2 = #b32024
+$blue = #0187c5
+$grey = #e3e3e3
+$black = #666
+$white = #fff
+
+$boxHeight = 500px
+
+html, body
+  height 100%
+body
+  margin 0
+  font-family 'Lato', sans-serif
+a
+  color $blue
+  text-decoration none
+  font-style italic
+  &:hover
+    text-decoration underline
+
+.wrapper
+  height 100%
+  width 100%
+  display table
+  text-align center
+.box
+  height $boxHeight
+
+#menu
+  background linear-gradient($red1, $red2)
+  display table-row
+  height 0px
+  form
+    line-height 3em
+    > div
+      display inline-block 
+    input, select, button
+      box-sizing border-box
+      height 1.8em
+    label
+      font-weight bold
+      padding 0 0 0 .8em
+      color $white
+      text-align left
+      vertical-align middle
+    input
+      width 12ch
+      padding .2em
+      margin 0 .2em
+      text-align center
+      &[name="limit"]
+        width 5ch
+    select
+      width 8ch
+    button
+      margin-left .8em
+      
+#header
+  h1
+    font-family 'Leckerli One'
+    font-size 4em
+    color $red1
+    margin-bottom 0
+    padding-bottom 0
+    /*
+    background linear-gradient($red1, $red2)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+    */
+  p
+    font-family 'Raleway', sans-serif
+    padding-bottom 1em
+    font-size 12pt
+    color $black
+  
+#content
+  position relative
+  background $grey
+  box-shadow: inset 0px 0px 2em $black;
+  #graph
+    //
+  #loader
+    position absolute
+    top 0
+    width 100%
+  
+#footer
+  display table-row
+  color $black
+  

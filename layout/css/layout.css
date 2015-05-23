@@ -1,52 +1,97 @@
-body { margin: 0; }
-
-.button {
-  position: fixed;
-  top: 1em;
-  left: 1em;
-  width: 64px;
-  height: 64px;
+@import url("http://fonts.googleapis.com/css?family=Raleway|Lato:400,700|Leckerli+One");
+html,
+body {
+  height: 100%;
 }
-
-.menu {
-  opacity: 0;
-  position: fixed;
-  top: -100%;
-  display: table;
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
 }
-
-.visual {
-  background: #5fc3e4;
-  z-index: 1;
+a {
+  color: #0187c5;
+  text-decoration: none;
+  font-style: italic;
 }
-.visual:after {
-  content: '?';
-  position: absolute;
-  top: 30%;
-  left: 38%;
-  font-family: monospace;
-  font-size: 18pt;
-  color: #fff;
+a:hover {
+  text-decoration: underline;
 }
-
-.toggle {
-  z-index: 2;
-  opacity: 0;
-}
-
-.toggle:checked + .visual {
-  background: #e55d87;
-}
-.toggle:checked + .visual:after {
-  content: 'X';
-}
-
-.toggle:checked ~ .menu {
-  position: fixed;
-  top: 0;
-  left: 0;
+.wrapper {
+  height: 100%;
   width: 100%;
-  height: 100%;  
-  background: #5fc3e4;
-  opacity: .8;
+  display: table;
+  text-align: center;
+}
+.box {
+  height: 500px;
+}
+#menu {
+  background: linear-gradient(#e31b23, #b32024);
+  display: table-row;
+  height: 0px;
+}
+#menu form {
+  line-height: 3em;
+}
+#menu form > div {
+  display: inline-block;
+}
+#menu form input,
+#menu form select,
+#menu form button {
+  box-sizing: border-box;
+  height: 1.8em;
+}
+#menu form label {
+  font-weight: bold;
+  padding: 0 0 0 0.8em;
+  color: #fff;
+  text-align: left;
+  vertical-align: middle;
+}
+#menu form input {
+  width: 12ch;
+  padding: 0.2em;
+  margin: 0 0.2em;
+  text-align: center;
+}
+#menu form input[name="limit"] {
+  width: 5ch;
+}
+#menu form select {
+  width: 8ch;
+}
+#menu form button {
+  margin-left: 0.8em;
+}
+#header h1 {
+  font-family: 'Leckerli One';
+  font-size: 4em;
+  color: #e31b23;
+  margin-bottom: 0;
+  padding-bottom: 0;
+/*
+    background linear-gradient($red1, $red2)
+    -webkit-background-clip text
+    -webkit-text-fill-color transparent
+    */
+}
+#header p {
+  font-family: 'Raleway', sans-serif;
+  padding-bottom: 1em;
+  font-size: 12pt;
+  color: #666;
+}
+#content {
+  position: relative;
+  background: #e3e3e3;
+  box-shadow: inset 0px 0px 2em #666;
+}
+#content #loader {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+#footer {
+  display: table-row;
+  color: #666;
 }

@@ -16,7 +16,7 @@ a:hover {
   text-decoration: underline;
 }
 .wrapper {
-  height: 120%;
+  height: 100%;
   width: 100%;
   display: table;
   text-align: center;
@@ -89,6 +89,31 @@ a:hover {
   position: relative;
   background: #e3e3e3;
   box-shadow: inset 0px 0px 2em #666;
+}
+#content #graph svg {
+  background: #fff;
+  shape-rendering: optimizeSpeed;
+}
+#content #graph svg .stream {
+  stroke: rgba(255,255,255,0.4);
+  stroke-width: 1px;
+}
+#content #graph svg .axis path,
+#content #graph svg .axis line {
+  stroke: #0187c5;
+  stroke-width: 4px;
+}
+#content #graph svg .line {
+  fill: none;
+  stroke: #0187c5;
+  stroke-width: 2px;
+}
+#content #graph svg .tick text {
+  font-size: 16px;
+  font-weight: 700;
+}
+#content #graph svg .tick line {
+  opacity: 0.2;
 }
 #content #loader {
   position: absolute;

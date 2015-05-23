@@ -23,7 +23,7 @@ a
     text-decoration underline
 
 .wrapper
-  height 120%
+  height 100%
   width 100%
   display table
   text-align center
@@ -86,7 +86,24 @@ a
   background $grey
   box-shadow: inset 0px 0px 2em $black;
   #graph
-    //
+    svg
+      background $white
+      shape-rendering optimizeSpeed
+      .stream
+        stroke rgba(255,255,255,0.4)
+        stroke-width 1px
+      .axis path, .axis line
+        stroke $blue
+        stroke-width 4px
+      .line
+        fill none
+        stroke $blue
+        stroke-width 2px
+      .tick text
+        font-size 16px
+        font-weight 700
+      .tick line
+        opacity .2
   #loader
     position absolute
     top 0

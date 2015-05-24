@@ -90,8 +90,8 @@ a
       background $white
       shape-rendering optimizeSpeed
       .stream
-        stroke rgba(255,255,255,0.4)
-        stroke-width 1px
+        //stroke rgba(255,255,255,0.4)
+        //stroke-width 1px
       .axis path, .axis line
         stroke $blue
         stroke-width 4px
@@ -107,8 +107,13 @@ a
   #loader
     position absolute
     top 0
-    width 100%
-  
+    width: 100%
+    z-index 100
+    svg
+      .indicator
+        fill $blue
+        transition 1s width
+
 #footer
   display table-row
   color $black

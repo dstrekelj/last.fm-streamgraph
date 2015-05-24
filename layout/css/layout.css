@@ -94,10 +94,6 @@ a:hover {
   background: #fff;
   shape-rendering: optimizeSpeed;
 }
-#content #graph svg .stream {
-  stroke: rgba(255,255,255,0.4);
-  stroke-width: 1px;
-}
 #content #graph svg .axis path,
 #content #graph svg .axis line {
   stroke: #0187c5;
@@ -119,6 +115,11 @@ a:hover {
   position: absolute;
   top: 0;
   width: 100%;
+  z-index: 100;
+}
+#content #loader svg .indicator {
+  fill: #0187c5;
+  transition: 1s width;
 }
 #footer {
   display: table-row;

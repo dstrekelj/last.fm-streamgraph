@@ -29,14 +29,14 @@ if (!Array.prototype.find) {
 var App = function() {
   var data              = [],
       limit             = '0',
-      target            = 'body',
+      loadingIndicator  = undefined,
       parameters        = { limit: 200, page: 1 },
-      loadingIndicator  = undefined;
+      target            = 'body';
   
   var lfm = new LastFM({
-    key     : 'b850afad537d9f0e53d131bd0bdf83d6',
-    secret  : 'cb2860d672f77ce8aaadee8610e0ac14',
     format  : 'json',
+    key     : 'b850afad537d9f0e53d131bd0bdf83d6',
+    secret  : 'cb2860d672f77ce8aaadee8610e0ac14'
   });
   
   /**
@@ -90,39 +90,55 @@ var App = function() {
    * Handles the formatted string response and prepares the data for drawing.
    */
   var responseHandler = function(Response) {
-    if (defined(loadingIndicator)) loadingIndicator.onUpdate();
+    var responseJSON = JSON.parse(Response);
     
-    var object  = JSON.parse(Response).recenttracks,
-        tracks  = object.track,
-        pages   = parseInt(object['@attr']['totalPages']);
+    // If the response has an error property, alert user with message and abort
+    if (responseJSON.hasOwnProperty('error')) {
+      alert('Error ' + responseJSON.error + ' - ' + responseJSON.message + '!');
+      return;
+    }
     
-    if (tracks[0].hasOwnProperty('@attr')) tracks.splice(0, 1);
+    var recentTracks  = responseJSON.recenttracks,
+        totalPages    = parseInt(recentTracks['@attr']['totalPages']),
+        tracksArray   = recentTracks.track;
     
-    for (var T in tracks) {
-      if (tracks.hasOwnProperty(T)) {
-        var artist      = tracks[T].artist['#text'],
-            date        = doDatesPair(parseInt(tracks[T].date['uts'])),
+    // Update loading indicator
+    if (defined(loadingIndicator)) loadingIndicator.onUpdate(parseInt(parameters.page), parseInt(totalPages));
+    
+    // If a track is currently being listened to by user, ignore it
+    if (tracksArray[0].hasOwnProperty('@attr')) tracksArray.splice(0, 1);
+    
+    for (var track in tracksArray) {
+      if (tracksArray.hasOwnProperty(track)) {
+        // Check if the current artist in `tracksArray` exists in `data`
+        var trackArtist = tracksArray[track].artist['#text'],
+            trackDate   = doDatesPair(parseInt(tracksArray[track].date['uts'])),
             foundArtist = data.find(function findArtist(E) {
-              return E.key == artist;
+              return E.key == trackArtist;
             });
-        
+        // If he does, find play date in `data` and increment play count
         if (defined(foundArtist)) {
           var foundPlay = foundArtist.value.find(function findPlay(E) {
-            return E.x == date.utc.getTime();
+            return E.x == trackDate.utc.getTime();
           });
+          
           if (defined(foundPlay)) foundPlay.y += 1;
+        // No artist? Generate play dates and add the artist to `data`
         } else {
-          var dates     = doDates(parameters.from, parameters.to),
-              foundPlay = dates.find(function findPlay(E) {
-                return E.x == date.utc.getTime();
+          var datesArray  = doDates(parameters.from, parameters.to),
+              foundPlay   = datesArray.find(function findPlay(E) {
+                return E.x == trackDate.utc.getTime();
               });
+          
           if (defined(foundPlay)) foundPlay.y += 1;
-          data.push({key: artist, value: dates});
+          
+          data.push({key: trackArtist, value: datesArray});
         }
       }
     }
     
-    if (parameters.page < pages) {
+    // Continue through all response pages and draw when done
+    if (parameters.page < totalPages) {
       parameters.page += 1;
       lfm.user.getRecentTracks(parameters, responseHandler);
     } else {
@@ -147,7 +163,7 @@ var App = function() {
         maxX          = Data[0].value[Data[0].value.length - 1].x;
     
     // If a graph already exists, remove and replace it
-    if (!d3.select('svg').empty()) d3.select('svg').remove();
+    if (!d3.select(target + ' > svg').empty()) d3.select('svg').remove();
 
     // Dimensions, yo
     var dataWidth   = numberOfDays * widthOfDay,
@@ -234,6 +250,12 @@ var App = function() {
     });
   };
   
+  /**
+   * Prepares an array of UTC dates (epoch time) in range `From` - `To`.
+   * @param   From  Epoch time (seconds), period start
+   * @param   To    Epoch time (seconds), period end
+   * @return  Array of UTC dates (epoch time)
+   */
   var doDates = function(From, To) {
     var data  = [],
         date  = doDatesPair(From);
@@ -244,11 +266,17 @@ var App = function() {
       date = doDatesPair(date.local.getTime() / 1000);
     }
     
+    // Can't remember why I wrote this. Probably because of an extra entry
     data.pop();
     
     return data;
   };
   
+  /**
+   * Creates local timezone and UTC Date tuple.
+   * @param   Epoch time (in seconds)
+   * @return  {local, UTC} Date tuple
+   */
   var doDatesPair = function(Time) {
     var local = new Date(Time * 1000),
         utc = new Date(Date.UTC(local.getFullYear(), local.getMonth(), local.getDate()));
@@ -256,7 +284,7 @@ var App = function() {
   };
   
   /**
-   * Filters data by play limit.
+   * Filters data by play limit (high-pass filter).
    * @param   Data    Data to filter
    * @param   Limit   Limit to impose (minimum play amount)
    * @return  Array of artists with `value.y` > `Limit`
@@ -273,6 +301,11 @@ var App = function() {
     return result;
   };
   
+  /**
+   * Finds largest number of plays in a day in observed period.
+   * @param   Data    Data to search through
+   * @return  Number of plays
+   */
   var doFindMaxY = function(Data) {
     var key   = 0,
         keys  = Data.length,
@@ -295,6 +328,9 @@ var App = function() {
   
   /**
    * Checks if `Values` array has a value greater than `Limit`.
+   * @param   Values  Array of values
+   * @param   Limit   Lower limit
+   * @return  `true` if it has, `false` if not
    */
   var overLimit = function(Values, Limit) {
     var play  = 0,
@@ -309,6 +345,8 @@ var App = function() {
   
   /**
    * Checks if `Object` is not undefined.
+   * @param   Object  The object to check
+   * @return  `true` if defined, `false` if not
    */
   var defined = function(Object) {
     return typeof Object != 'undefined';

@@ -28,18 +28,16 @@ var Loader = function(Target) {
   };
   
   this.onStart = function() {
-    //log('Requesting data...');
   };
   
   this.onUpdate = function(Current, Total) {
-    //log('Collecting data... (' + Current + ' / ' + Total + ')');
     console.log(rect.attr('width'));
+    // `Total - 1` because the graph is drawn on last response handling
     rect.transition().attr('width', Math.floor(Current/(Total - 1) * 100) + '%').duration(1000);
     count += 1;
   };
   
   this.onFinish = function() {
-    //log('Done! Drawing streamgraph...');
     rect.transition().attr('width', '0%').duration(1000);
     count = 1;
   };

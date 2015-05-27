@@ -1,3 +1,31 @@
+// Quick-and-dirty way of populating drop down menus
+(function () {
+  var currentDate = new Date(Date.now()),
+      monthNames  = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  function addOption(Parent, Text, Value) {
+    var option = document.createElement('option');
+    option.setAttribute('value', Value);
+    option.innerText = Text;
+    document.getElementById(Parent).appendChild(option);
+  }
+
+  for (var year = 2006; year <= currentDate.getFullYear(); year++) {
+    addOption('fromY', year, year);
+    addOption('toY', year, year);
+  }
+
+  for (var month = 0; month < 12; month++) {
+    addOption('fromM', monthNames[month], month);
+    addOption('toM', monthNames[month], month);
+  }
+
+  for (var date = 1; date <= 31; date++) {
+    addOption('fromD', date, date);
+    addOption('toD', date, date);
+  }
+}());
+
 /**
  * Parse form data into inline object.
  * @param	form	HTML form
@@ -16,6 +44,8 @@ function parseForm (Form) {
 
   return formData;
 };
+
+// -- APP -- //
 
 var app = new App();
 

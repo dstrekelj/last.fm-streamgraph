@@ -59,7 +59,7 @@ var App = function() {
         && parameters.to == Parameters.to
         && limit == Parameters.limit)
     {
-      if (defined(loadingIndicator)) loadingIndicator.onError({ error: '1', message: 'No change in parameters. No request will be sent.' });
+      if (defined(loadingIndicator)) loadingIndicator.onError({ error: '01', message: 'No change in parameters. No request will be sent.' });
     }
     else if (defined(parameters.user)
         && parameters.user == Parameters.user
@@ -93,7 +93,20 @@ var App = function() {
     
     // If the response has an error property, alert user with message and abort
     if (responseJSON.hasOwnProperty('error')) {
-      alert('Error ' + responseJSON.error + ' - ' + responseJSON.message + '!');
+      if (defined(loadingIndicator)) {
+        loadingIndicator.onError({ error: responseJSON.error, message: responseJSON.message });
+      } else {
+        alert('Error ' + responseJSON.error + ' - ' + responseJSON.message + '!');
+      }
+      return;
+    }
+    
+    if (!defined(responseJSON.recenttracks['@attr']['totalPages'])) {
+      if (defined(loadingIndicator)) {
+        loadingIndicator.onError({ error: '02', message: 'Corrupted response. Please try again.' });
+      } else {
+        alert('Error 02 - Corrupted response. Please try again.');
+      }
       return;
     }
     

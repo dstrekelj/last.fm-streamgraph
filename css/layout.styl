@@ -44,7 +44,7 @@ a
   display table
   text-align center
   form
-    line-height 3em
+    padding .5em
     > div
       display inline-block 
     input, select, button
@@ -55,15 +55,15 @@ a
       margin 0 .5em
       color $white
       text-align left
-      vertical-align middle
+      vertical-align baseline
     input
-      width 12ch
+      width 65px
       padding .2em
       text-align center
       &[name="limit"]
         width 5ch
     select
-      width 8ch
+      width 55px
     button
       margin-left .8em
       
@@ -96,7 +96,7 @@ a
     margin-top -10px
     height 30px
     svg
-      height 4px
+      //height 4px
       rect
         fill $blue
   #graph
@@ -106,8 +106,11 @@ a
     svg
       background $white
       shape-rendering optimizeSpeed
+      .stream
+        stroke $white
+        stroke-width 1px
       .blur
-        opacity 0.6
+        opacity 0.2
       .axis path, .axis line
         stroke $blue
         stroke-width 6px

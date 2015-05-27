@@ -5,8 +5,11 @@
 
   function addOption(Parent, Text, Value) {
     var option = document.createElement('option');
+    var text = document.createTextNode(Text);
     option.setAttribute('value', Value);
-    option.innerText = Text;
+    // Firefox doesn't do well with `innerText`, so we append a text node
+    //option.innerText = Text;
+    option.appendChild(text);
     document.getElementById(Parent).appendChild(option);
   }
 

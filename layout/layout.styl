@@ -10,6 +10,13 @@ $white = #fff
 $boxHeight = 500px
 $menuHeight = 1.2em
 
+text-stroke(w, c)
+  text-shadow:
+    -(w) -(w) 0 c,
+     (w)  (w) 0 c,
+    -(w)  (w) 0 c,
+     (w) -(w) 0 c
+
 html, body
   height 100%
 body
@@ -27,8 +34,6 @@ a
   width 100%
   display table
   text-align center
-.box
-  height $boxHeight
 
 #menu
   background linear-gradient($red1, $red2)
@@ -77,24 +82,35 @@ a
     */
   p
     font-family 'Raleway', sans-serif
-    padding-bottom 1em
     font-size 12pt
     color $black
-  
+    
 #content
-  position relative
-  background $grey
-  box-shadow: inset 0px 0px 2em $black;
+  #label
+    height 1em
+    margin-bottom .8em
+    background $white
+    font-family 'Lato', sans-serif
+    font-weight bold
+  #loader
+    margin-top -10px
+    height 30px
+    svg
+      height 4px
+      rect
+        fill $blue
   #graph
+    background $grey
+    box-shadow: inset 0px 0px 2em $black;
+    height $boxHeight
     svg
       background $white
       shape-rendering optimizeSpeed
-      .stream
-        //stroke rgba(255,255,255,0.4)
-        //stroke-width 1px
+      .blur
+        opacity 0.6
       .axis path, .axis line
         stroke $blue
-        stroke-width 4px
+        stroke-width 6px
       .line
         fill none
         stroke $blue
@@ -104,15 +120,6 @@ a
         font-weight 700
       .tick line
         opacity .2
-  #loader
-    position absolute
-    top 0
-    width: 100%
-    z-index 100
-    svg
-      .indicator
-        fill $blue
-        transition 1s width
 
 #footer
   display table-row

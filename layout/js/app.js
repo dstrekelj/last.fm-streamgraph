@@ -59,7 +59,7 @@ var App = function() {
         && parameters.to == Parameters.to
         && limit == Parameters.limit)
     {
-      // TODO: Add indicator method?
+      if (defined(loadingIndicator)) loadingIndicator.onError({ error: '1', message: 'No change in parameters. No request will be sent.' });
     }
     else if (defined(parameters.user)
         && parameters.user == Parameters.user
@@ -67,7 +67,6 @@ var App = function() {
         && parameters.to   == Parameters.to
         && limit           != Parameters.limit)
     {
-      // TODO: Add indicator method?
       limit = Parameters.limit;
       draw(data);
     }
@@ -163,11 +162,12 @@ var App = function() {
         maxX          = Data[0].value[Data[0].value.length - 1].x;
     
     // If a graph already exists, remove and replace it
-    if (!d3.select(target + ' > svg').empty()) d3.select('svg').remove();
+    if (!d3.select('#streamgraph').empty()) d3.select('#streamgraph').remove();
 
     // Dimensions, yo
     var dataWidth   = numberOfDays * widthOfDay,
         axisHeight  = 20,
+        sliderHeight= 20,
         width       = document.body.clientWidth,
         height      = parseInt(d3.select('#graph').style('height'));
 
@@ -175,17 +175,18 @@ var App = function() {
     var svg = d3.select(target)
       .append('svg')
       .attr({
-        width   : width,
+        id      : 'streamgraph',
+        width   : '100%',
         height  : height
       });
     
     var group = svg.append('g'),
-        label = group.append('text');
+        label = d3.select('#label');
     
     // Scales
     var x = d3.time.scale().domain([minX, maxX]).range([0, width]),
-        y = d3.scale.linear().domain([0, maxY]).range([axisHeight, height]),
-        c = d3.scale.linear().domain([0, Data.length - 1]).interpolate(d3.interpolateRgb).range(['#e31b23', '#b32024']);
+        y = d3.scale.linear().domain([0, maxY]).range([axisHeight, height - sliderHeight]),
+        c = d3.scale.linear().domain([0, Data.length - 1]).interpolate(d3.interpolateRgb).range(['#b32024', '#0187c5']);
     
     // Axis
     var xAxis = d3.svg.axis()
@@ -211,43 +212,50 @@ var App = function() {
       .y0(function areaY0(d) { return y(d.y0); })
       .y1(function areaY1(d) { return y(d.y0 + d.y); });
 
-    // Zoom
-    var zoom = d3.behavior.zoom()
-      .scaleExtent([1, 1])
-      .x(x)
-      .on('zoom', function onZoom() {
-        var e = d3.event,
-            tx = Math.max(Math.min(e.translate[0], 0), width - dataWidth),
-            ty = 0;
-        zoom.translate([tx, ty]);
-        group.attr('transform', 'translate(' + tx + ',' + ty + ')');
-      });
-    
     group.append('g')
       .call(xAxis)
       .attr({
-        class      : 'axis',
-        transform  : 'translate(0,' + axisHeight + ')'
+        class     : 'axis',
+        transform : 'translate(0,' + axisHeight + ')'
       });
     
     group.selectAll('path')
       .data(stack(Data))
       .enter()
         .append('path')
-        .attr('class', 'stream')
-        .attr('d', function pathData(d) { return area(d.value); })
+        .attr({
+          class : 'stream',
+          d     : function pathData(d) { return area(d.value); }
+        })
         .style('fill', function pathFill(d, i) { return c(i); })
-        .on('mouseover', function(d) { label.text(d.key); })
-        .on('mouseleave', function() { label.text(''); });
+        .on('mouseenter', function mouseEnter(d, i) {
+          label.text(d.key);
+          d3.select(this).classed('focus', true);
+          d3.selectAll('.stream').classed('blur', function(d, j) { return i != (j + 1); });
+        })
+        .on('mouseleave', function mouseLeave() {
+          label.text('');
+          d3.select(this).classed('focus', false);
+          d3.selectAll('.stream').classed('blur', false);
+        })
+        .on('click', function click(d, i) {
+          d3.select(this).classed('clicked', !d3.select(this).classed('clicked'));
+        });
     
+    d3.select(window).on('resize', function resize() {
+      x.range([0, parseInt(d3.select('#graph').style('width'), 10)]);
+      group.select('.axis').call(xAxis);
+      group.selectAll('.stream')
+        .data(stack(Data))
+        .attr('d', function pathData(d) { return area(d.value); });
+    });
+    
+    /*
     group.on('mousemove', function() {
       var mouse = d3.mouse(this);
-      label.attr({
-          x : mouse[0] + 20,
-          y : mouse[1] + 20
-        })
-        .each(function() { this.parentNode.appendChild(this); });
+      label.attr({x: mouse[0] + 20, y: mouse[1] + 20});
     });
+    */
   };
   
   /**

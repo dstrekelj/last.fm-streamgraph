@@ -21,9 +21,6 @@ a:hover {
   display: table;
   text-align: center;
 }
-.box {
-  height: 500px;
-}
 #menu {
   background: linear-gradient(#e31b23, #b32024);
   z-index: 3;
@@ -81,23 +78,42 @@ a:hover {
 }
 #header p {
   font-family: 'Raleway', sans-serif;
-  padding-bottom: 1em;
   font-size: 12pt;
   color: #666;
 }
-#content {
-  position: relative;
+#content #label {
+  height: 1em;
+  margin-bottom: 0.8em;
+  background: #fff;
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+}
+#content #loader {
+  margin-top: -10px;
+  height: 30px;
+}
+#content #loader svg {
+  height: 4px;
+}
+#content #loader svg rect {
+  fill: #0187c5;
+}
+#content #graph {
   background: #e3e3e3;
   box-shadow: inset 0px 0px 2em #666;
+  height: 500px;
 }
 #content #graph svg {
   background: #fff;
   shape-rendering: optimizeSpeed;
 }
+#content #graph svg .blur {
+  opacity: 0.6;
+}
 #content #graph svg .axis path,
 #content #graph svg .axis line {
   stroke: #0187c5;
-  stroke-width: 4px;
+  stroke-width: 6px;
 }
 #content #graph svg .line {
   fill: none;
@@ -110,16 +126,6 @@ a:hover {
 }
 #content #graph svg .tick line {
   opacity: 0.2;
-}
-#content #loader {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 100;
-}
-#content #loader svg .indicator {
-  fill: #0187c5;
-  transition: 1s width;
 }
 #footer {
   display: table-row;

@@ -31,7 +31,7 @@ a:hover {
   text-align: center;
 }
 #menu form {
-  line-height: 3em;
+  padding: 0.5em;
 }
 #menu form > div {
   display: inline-block;
@@ -47,10 +47,10 @@ a:hover {
   margin: 0 0.5em;
   color: #fff;
   text-align: left;
-  vertical-align: middle;
+  vertical-align: baseline;
 }
 #menu form input {
-  width: 12ch;
+  width: 65px;
   padding: 0.2em;
   text-align: center;
 }
@@ -58,7 +58,7 @@ a:hover {
   width: 5ch;
 }
 #menu form select {
-  width: 8ch;
+  width: 55px;
 }
 #menu form button {
   margin-left: 0.8em;
@@ -92,9 +92,6 @@ a:hover {
   margin-top: -10px;
   height: 30px;
 }
-#content #loader svg {
-  height: 4px;
-}
 #content #loader svg rect {
   fill: #0187c5;
 }
@@ -107,8 +104,12 @@ a:hover {
   background: #fff;
   shape-rendering: optimizeSpeed;
 }
+#content #graph svg .stream {
+  stroke: #fff;
+  stroke-width: 1px;
+}
 #content #graph svg .blur {
-  opacity: 0.6;
+  opacity: 0.2;
 }
 #content #graph svg .axis path,
 #content #graph svg .axis line {

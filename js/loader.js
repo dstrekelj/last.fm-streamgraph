@@ -8,7 +8,7 @@ var Loader = function(Target) {
     .append('svg')
     .attr({
       width: '100%',
-      height: parseInt(d3.select('#loader').style('height'))
+      height: '4px'
     });
   
   var rect = svg.append('rect')
@@ -17,7 +17,7 @@ var Loader = function(Target) {
       x: 0,
       y: 0,
       width: 0,
-      height: parseInt(d3.select('#loader').style('height'))
+      height: '4px' //parseInt(d3.select('#loader > graph').style('height'))
     });
   
   var log = function(Text) {
@@ -26,6 +26,7 @@ var Loader = function(Target) {
   
   this.onStart = function() {
     label.text('Requesting data...');
+    rect.transition().attr('width', '0%').duration(1000);
   };
   
   this.onUpdate = function(Current, Total) {

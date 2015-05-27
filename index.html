@@ -3,173 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>last.fm Streamgraph</title>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/d3.slider.css">
+  <link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
-  <div id="navigation" class="table">
-    <div class="cell container">
-      <form name="parameters" id="parameters" class="table border border-blue" action="">
-        <div class="cell content container">
-          <label for="user">Username:</label>
-          <input type="text" id="user" name="user" class="border-blue" value="bigidiot" />
-          <label for="limit">Play limit:</label>
-          <input type="text" id="limit" name="limit" class="border-blue" value="10" />
-        </div>
-        <div class="cell content container">
-          <label for="">From:</label>
-          <select id="fromY" name="fromY" class="border-blue">
-              <option selected>Year</option>
-              <option value="2002">2002</option>
-              <option value="2003">2003</option>
-              <option value="2004">2004</option>
-              <option value="2005">2005</option>
-              <option value="2006">2006</option>
-              <option value="2007">2007</option>
-              <option value="2008">2008</option>
-              <option value="2009">2009</option>
-              <option value="2010">2010</option>
-              <option value="2011">2011</option>
-              <option value="2012">2012</option>
-              <option value="2013">2013</option>
-              <option value="2014">2014</option>
-              <option value="2015" selected>2015</option>
-            </select>
-            <select id="fromM" name="fromM" class="border-blue">
-              <option selected>Month</option>
-              <option value="0">Jan</option>
-              <option value="1">Feb</option>
-              <option value="2">Mar</option>
-              <option value="3" selected>Apr</option>
-              <option value="4">May</option>
-              <option value="5">Jun</option>
-              <option value="6">Jul</option>
-              <option value="7">Aug</option>
-              <option value="8">Sep</option>
-              <option value="9">Oct</option>
-              <option value="10">Nov</option>
-              <option value="11">Dec</option>
-            </select>
-            <select id="fromD" name="fromD" class="border-blue">
-              <option selected>Date</option>
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="17">17</option>
-              <option value="18">18</option>
-              <option value="19">19</option>
-              <option value="20">20</option>
-              <option value="21">21</option>
-              <option value="22">22</option>
-              <option value="23">23</option>
-              <option value="24">24</option>
-              <option value="25">25</option>
-              <option value="26">26</option>
-              <option value="27">27</option>
-              <option value="28">28</option>
-              <option value="29">29</option>
-              <option value="30">30</option>
-              <option value="31">31</option>
-            </select>
-          <label for="">To:</label>
-          <select id="toY" name="toY" class="border-blue">
-              <option selected>Year</option>
-              <option value="2002">2002</option>
-              <option value="2003">2003</option>
-              <option value="2004">2004</option>
-              <option value="2005">2005</option>
-              <option value="2006">2006</option>
-              <option value="2007">2007</option>
-              <option value="2008">2008</option>
-              <option value="2009">2009</option>
-              <option value="2010">2010</option>
-              <option value="2011">2011</option>
-              <option value="2012">2012</option>
-              <option value="2013">2013</option>
-              <option value="2014">2014</option>
-              <option value="2015" selected>2015</option>
-            </select>
-            <select id="toM" name="toM" class="border-blue">
-              <option selected>Month</option>
-              <option value="0">Jan</option>
-              <option value="1">Feb</option>
-              <option value="2">Mar</option>
-              <option value="3">Apr</option>
-              <option value="4" selected>May</option>
-              <option value="5">Jun</option>
-              <option value="6">Jul</option>
-              <option value="7">Aug</option>
-              <option value="8">Sep</option>
-              <option value="9">Oct</option>
-              <option value="10">Nov</option>
-              <option value="11">Dec</option>
-            </select>
-            <select id="toD" name="toD" class="border-blue">
-              <option selected>Date</option>
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="17">17</option>
-              <option value="18">18</option>
-              <option value="19">19</option>
-              <option value="20">20</option>
-              <option value="21">21</option>
-              <option value="22">22</option>
-              <option value="23">23</option>
-              <option value="24">24</option>
-              <option value="25">25</option>
-              <option value="26">26</option>
-              <option value="27">27</option>
-              <option value="28">28</option>
-              <option value="29">29</option>
-              <option value="30">30</option>
-              <option value="31">31</option>
-            </select>
-        </div>
-        <div class="cell content">
-          <button id="go" type="submit"><span>Go!</span></button>
-        </div>
-      </form>
-    </div>
-    <div class="cell container">
-      <div class="cell container content border border-red">
-        <div><p>Submit the form to visualise your last.fm listening history.</p></div>
-        <div id="loader"></div>
+  <div id="menu">
+    <form name="parameters" id="parameters">
+      <div>
+        <label for="user">Username:</label>
+        <input type="text" id="user" name="user" value="bigidiot" />
+        <label for="limit">Minimum plays:</label>
+        <input type="text" id="limit" name="limit" value="10" />
       </div>
+      <div>
+        <label>From:</label>
+        <select id="fromY" name="fromY"></select>
+        <select id="fromM" name="fromM"></select>
+        <select id="fromD" name="fromD"></select>
+        <label>To:</label>
+        <select id="toY" name="toY"></select>
+        <select id="toM" name="toM"></select>
+        <select id="toD" name="toD"></select>
+        <button id="go" type="submit">Go!</button>
+      </div>
+    </form>
+  </div>
+  <div class="wrapper">
+    <div id="header">
+      <h1>last.fm streamgraph</h1>
+      <p>by <a href="http://dstrekelj.github.io">Domagoj Štrekelj</a></p>
+    </div>
+    <div id="content">
+      <div id="label"></div>
+      <div id="loader"></div>
+      <div id="graph"></div>
     </div>
   </div>
-  <div id="content" class="table">
-    <div id="graph"></div>
-    <div id="slider"></div>
-  </div>
-  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/d3.v3.min.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/d3.slider.js"></script>
   <script type="text/javascript" src="js/last.fm.js"></script>
   <script type="text/javascript" src="js/app.js"></script>

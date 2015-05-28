@@ -3,7 +3,7 @@ last.fm Streamgraph
 
 Visualise your last.fm listening history in the form of a streamgraph.
 
-Inspired by [LastGraph](http://lastgraph.aeracode.org/), but maybe not as good just yet.
+Inspired by [LastGraph](http://lastgraph.aeracode.org/), but maybe not as good just yet. [Give it a try](http://dstrekelj.github.io/last.fm-streamgraph).
 
 ## TODO
 

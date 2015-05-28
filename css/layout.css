@@ -128,6 +128,12 @@ a:hover {
 #content #graph svg .tick line {
   opacity: 0.2;
 }
+#content #graph svg .slider-container {
+  fill: #c3c3c3;
+}
+#content #graph svg .slider-brush {
+  fill: #b32024;
+}
 #footer {
   display: table-row;
   color: #666;

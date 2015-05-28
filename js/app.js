@@ -224,7 +224,7 @@ var App = function() {
       .x(function areaX(d, i) { return x(d.x); })
       .y0(function areaY0(d) { return y(d.y0); })
       .y1(function areaY1(d) { return y(d.y0 + d.y); });
-
+    
     group.append('g')
       .call(xAxis)
       .attr({
@@ -255,8 +255,53 @@ var App = function() {
           d3.select(this).classed('clicked', !d3.select(this).classed('clicked'));
         });
     
+    // Slider
+    var sliderHeight  = 20,
+        sliderScale   = d3.time.scale().domain([minX, maxX]).range([0, width]),
+        slider        = svg.append('g');
+    
+    var brush = d3.svg.brush()
+      .x(sliderScale)
+      .extent([minX, maxX])
+      .on('brush', sliderBrush);
+    
+    slider.append('rect')
+      .attr('class', 'slider-container')
+      .attr({
+        x     : 0,
+        y     : height - sliderHeight,
+        width : width,
+        height: sliderHeight
+      });
+    
+    slider.append('g')
+      .attr('class', 'slider-brush')
+      .call(brush)
+      .selectAll('rect')
+      .attr({
+        y     : height - sliderHeight,
+        height: sliderHeight
+      });
+    
+    function sliderBrush() {
+      var min = Math.floor(brush.extent()[0]),
+          max = Math.floor(brush.extent()[1]);
+      
+      x.domain([min, max]);
+      group.select('.axis').call(xAxis);
+      group.selectAll('.stream')
+        .data(stack(Data))
+        .attr('d', function pathData(d) { return area(d.value); });
+    };
+    
     d3.select(window).on('resize', function resize() {
-      x.range([0, parseInt(d3.select('#graph').style('width'), 10)]);
+      var newWidth = parseInt(d3.select('#graph').style('width'), 10);
+      
+      sliderScale.range([0, newWidth]);
+      slider.select('.slider-container').attr('width', newWidth);
+      slider.select('.slider-brush').call(brush);
+      
+      x.range([0, newWidth]);
       group.select('.axis').call(xAxis);
       group.selectAll('.stream')
         .data(stack(Data))

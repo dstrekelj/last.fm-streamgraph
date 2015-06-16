@@ -105,8 +105,8 @@ a:hover {
   shape-rendering: optimizeSpeed;
 }
 #content #graph svg .stream {
-  stroke: #fff;
-  stroke-width: 1px;
+  /*stroke: #fff;
+  stroke-width: 1px;*/
 }
 #content #graph svg .blur {
   opacity: 0.2;

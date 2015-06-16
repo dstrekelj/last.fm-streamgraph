@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>last.fm Streamgraph</title>
+  <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+  <div id="notifier" style="position: fixed; display: table; width: 100%; height: 100%; z-index: -1;">
+    <!--
+    <div id="help" style="display: table-cell; vertical-align: middle; text-align: center;"> sadasdas dasd as <br> sad <br> sadsa <br>a sdasd</div>
+    -->
+  </div>
+  <div id="menu">
+    <form name="parameters" id="parameters">
+      <div>
+        <label for="user">Username:</label>
+        <input type="text" id="user" name="user" value="bigidiot" />
+        <label for="limit">Minimum plays:</label>
+        <input type="text" id="minimumPlays" name="minimumPlays" value="10" />
+      </div>
+      <div>
+        <label>From:</label>
+        <select id="fromY" name="fromY"></select>
+        <select id="fromM" name="fromM"></select>
+        <select id="fromD" name="fromD"></select>
+        <label>To:</label>
+        <select id="toY" name="toY"></select>
+        <select id="toM" name="toM"></select>
+        <select id="toD" name="toD"></select>
+        <button id="go" type="submit">Go!</button>
+      </div>
+    </form>
+  </div>
+  <div class="wrapper">
+    <div id="header">
+      <h1>last.fm streamgraph</h1>
+      <p>authored by <a href="http://github.com/dstrekelj">Domagoj Štrekelj</a> / made possible by Mike Bostock's <a href="http://d3js.org/">D3</a> / need <a href="#">help?</a> </p>
+    </div>
+    <div id="content">
+      <div id="label"></div>
+      <div id="loader"></div>
+      <div id="graph"></div>
+      <script src="js/lib/require.js" data-main="js/main"></script>
+    </div>
+  </div>
+</body>
+</html>

@@ -45,12 +45,12 @@ define(['app/mod/data', 'app/mod/errors', 'app/mod/grapher', 'helper', 'app/mod/
       foundArtist = Data.data.find(function(E) { return E.key == artist; });
       
       if (Helper.defined(foundArtist)) {
-        foundPlay = foundArtist.value.find(function(E) { console.log(E.x + '\t' + date.utc.getTime()); return E.x == date.utc.getTime(); });
+        foundPlay = foundArtist.value.find(function(E) { return E.x == date.utc.getTime(); });
         
         if (Helper.defined(foundPlay)) { foundPlay.y += 1; }
       } else {
         dateRange = Helper.doDates(LFM.parameters.from, LFM.parameters.to);
-        foundPlay = dateRange.find(function(E) { console.log(E.x + '\t' + date.utc.getTime()); return E.x == date.utc.getTime(); });
+        foundPlay = dateRange.find(function(E) { return E.x == date.utc.getTime(); });
         
         if (Helper.defined(foundPlay)) { foundPlay.y += 1; }
         

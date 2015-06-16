@@ -18,8 +18,6 @@ define(function() {
       if (overLimit(Data[key].value, Limit)) result.push(Data[key]);
     }
     
-    console.log(result);
-    
     return result;
   };
   

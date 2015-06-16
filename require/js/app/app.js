@@ -20,8 +20,6 @@ define(['app/mod/data', 'app/mod/errors', 'app/mod/grapher', 'helper', 'app/mod/
         
         Loader.onStart();
         
-        console.log(LFM.parameters);
-        
         LFM.methods.user.getRecentTracks(LFM.parameters, Parser.parse);
       }
     }

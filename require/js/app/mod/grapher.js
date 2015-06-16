@@ -5,17 +5,18 @@ define(['d3', 'app/mod/data', 'app/mod/lfm'], function(d3, Data, LFM) {
     
     var numberOfDays = dataset[0].value.length,
         widthOfDay = 40,
-        maxY = Data.findMaxY(Data.data),
+        maxY = Data.findMaxY(dataset),
         minX = dataset[0].value[0].x,
         maxX = dataset[0].value[numberOfDays - 1].x;
     
     if (!d3.select('#streamgraph').empty()) d3.select('#streamgraph').remove();
     
-    var dataWidth = numberOfDays * widthOfDay,
-        axisHeight = 20,
+    var axisHeight = 20,
+        dataWidth = numberOfDays * widthOfDay,
+        height = parseInt(d3.select('#graph').style('height')),
         sliderHeight = 20,
-        width = document.body.clientWidth,
-        height = parseInt(d3.select('#graph').style('height'));
+        statsHeight = 10,
+        width = document.body.clientWidth;
     
     var svg = d3.select('#graph')
       .append('svg')
@@ -28,9 +29,20 @@ define(['d3', 'app/mod/data', 'app/mod/lfm'], function(d3, Data, LFM) {
     var group = svg.append('g'),
         label = d3.select('#label');
     
+    var stats = svg.append('g')
+      .append('text')
+      .attr({
+        x : '50%',
+        y : height - sliderHeight - statsHeight,
+        'text-anchor' : 'middle',
+        'alignment-baseline' : 'alphabetic'
+      })
+      .text('unique artists: ' + dataset.length + ' / most tracks in a day: ' + Data.findMaxY(Data.data));
+    
     var x = d3.time.scale().domain([minX, maxX]).range([0, width]),
-        y = d3.scale.linear().domain([0, maxY]).range([axisHeight, height - sliderHeight]),
-        c = d3.scale.linear().domain([0, dataset.length - 1]).interpolate(d3.interpolateRgb).range(['#b32024', '#0187c5']);
+        y = d3.scale.linear().domain([0, maxY]).range([axisHeight, height - sliderHeight - statsHeight]),
+        //c = d3.scale.linear().domain([0, dataset.length - 1]).interpolate(d3.interpolateRgb).range(['#b32024', '#0187c5']);
+        c = d3.scale.category20();
     
     // Axis
     var xAxis = d3.svg.axis()
@@ -40,7 +52,7 @@ define(['d3', 'app/mod/data', 'app/mod/lfm'], function(d3, Data, LFM) {
       .outerTickSize(0)
       .ticks(d3.time.week)
       .tickPadding(8)
-      .tickFormat(d3.time.format('%d. %B'));
+      .tickFormat(d3.time.format('%d. %b'));
     
     // Stack
     var stack = d3.layout.stack()
@@ -73,17 +85,31 @@ define(['d3', 'app/mod/data', 'app/mod/lfm'], function(d3, Data, LFM) {
         })
         .style('fill', function pathFill(d, i) { return c(i); })
         .on('mouseenter', function mouseEnter(d, i) {
-          label.text(d.key);
-          d3.select(this).classed('focus', true);
-          d3.selectAll('.stream').classed('blur', function(d, j) { return i != (j + 1); });
+          if (d3.selectAll('.stream.clicked').empty()) {
+            label.text(d.key);
+            d3.select(this).classed('focus', true);
+            d3.selectAll('.stream').classed('blur', function(d, j) { return i != (j + 1); });
+          }
         })
         .on('mouseleave', function mouseLeave() {
-          label.text('');
-          d3.select(this).classed('focus', false);
-          d3.selectAll('.stream').classed('blur', false);
+          if (d3.selectAll('.stream.clicked').empty()) {
+            label.text('');
+            d3.select(this).classed('focus', false);
+            d3.selectAll('.stream').classed('blur', false);
+          }
         })
         .on('click', function click(d, i) {
-          d3.select(this).classed('clicked', !d3.select(this).classed('clicked'));
+          //d3.select(this).classed('clicked', !d3.select(this).classed('clicked'));
+          if (d3.select(this).classed('clicked')) {
+            d3.select(this).classed('clicked', false);
+            d3.selectAll('.stream').classed('blur', false);
+          } else {
+            if (d3.selectAll('.stream.clicked').empty()) {
+              d3.select(this).classed('clicked', true);
+              d3.selectAll('.stream').classed('blur', function(d, j) { return i != j + 1; });
+              d3.selectAll('.stream').classed('focus', function(d, j) { return i == j + 1; });
+            }
+          }
         });
     
     // Slider

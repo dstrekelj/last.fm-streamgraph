@@ -15,7 +15,7 @@ define(['d3', 'app/mod/data', 'app/mod/lfm'], function(d3, Data, LFM) {
         dataWidth = numberOfDays * widthOfDay,
         height = parseInt(d3.select('#graph').style('height')),
         sliderHeight = 20,
-        statsHeight = 10,
+        statsHeight = 20,
         width = document.body.clientWidth;
     
     var svg = d3.select('#graph')
@@ -33,7 +33,7 @@ define(['d3', 'app/mod/data', 'app/mod/lfm'], function(d3, Data, LFM) {
       .append('text')
       .attr({
         x : '50%',
-        y : height - sliderHeight - statsHeight,
+        y : height - sliderHeight - statsHeight / 2,
         'text-anchor' : 'middle',
         'alignment-baseline' : 'alphabetic'
       })

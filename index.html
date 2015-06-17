@@ -6,10 +6,31 @@
   <link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
-  <div id="notifier" style="position: fixed; display: table; width: 100%; height: 100%; z-index: -1;">
-    <!--
-    <div id="help" style="display: table-cell; vertical-align: middle; text-align: center;"> sadasdas dasd as <br> sad <br> sadsa <br>a sdasd</div>
-    -->
+  <div id="notifier" class="hide">
+    <div id="help">
+      <div>
+        <h2><i>Help! How do I use this?</i></h2>
+        <p>
+          This web application uses a 
+          <a href="http://www.last.fm">last.fm</a> 
+          user's listening history to generate a 
+          <a href="http://leebyron.com/streamgraph/">streamgraph</a> 
+          of his listening activity.
+        </p>
+        <p>
+          Enter a last.fm username into the <b>"Username"</b> field, and set 
+          the date range you want to observe with the <b>"From"</b> and 
+          <b>"To"</b> options. Use the <b>"Minimum plays"</b> field to 
+          fine-tune the resulting graph by only showing those artists above 
+          the provided minimum plays value.
+        </p>
+        <p>
+          The slider at the bottom of the generated streamgraph can be used 
+          to zoom into and pan across the graph.
+        </p>
+        <a id="notifierHide" href="#">Understood!</a>
+      </div>
+    </div>
   </div>
   <div id="menu">
     <form name="parameters" id="parameters">
@@ -35,7 +56,7 @@
   <div class="wrapper">
     <div id="header">
       <h1>last.fm streamgraph</h1>
-      <p>authored by <a href="http://github.com/dstrekelj">Domagoj Štrekelj</a> / made possible by Mike Bostock's <a href="http://d3js.org/">D3</a> / need <a href="#">help?</a> </p>
+      <p>authored by <a href="http://github.com/dstrekelj">Domagoj Štrekelj</a> / made possible by Mike Bostock's <a href="http://d3js.org/">d3</a> / need <a id="notifierShow" href="">help?</a> </p>
     </div>
     <div id="content">
       <div id="label"></div>

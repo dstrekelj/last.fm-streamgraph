@@ -50,7 +50,9 @@ define(['d3', 'app/mod/data', 'app/mod/lfm'], function(d3, Data, LFM) {
       .orient('top')
       .innerTickSize(-height)
       .outerTickSize(0)
-      .ticks(d3.time.week)
+      //.ticks(d3.time.day)
+      //.tickValues(x.domain())
+      .ticks(7)
       .tickPadding(8)
       .tickFormat(d3.time.format('%d. %b'));
     

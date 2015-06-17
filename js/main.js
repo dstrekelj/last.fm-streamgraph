@@ -6,7 +6,7 @@ require.config({
   }
 });
 
-require(['ui/parseForm', 'app/app', 'ui/populateDropdown', 'polyfill'], function(ParseForm, App) {
+require(['ui/parseForm', 'app/app', 'ui/populateDropdown', 'polyfill', 'ui/notifier'], function(ParseForm, App) {
   
   function onClick(Event) {
     Event.preventDefault();

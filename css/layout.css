@@ -15,6 +15,47 @@ a {
 a:hover {
   text-decoration: underline;
 }
+#notifier {
+  position: fixed;
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+#notifier #help {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  background: rgba(255,255,255,0.7);
+}
+#notifier #help div {
+  display: inline-block;
+  padding: 2em;
+  width: 400px;
+  background: #fff;
+  border: 2px solid #e3e3e3;
+}
+#notifier #help div h2 {
+  line-height: 2em;
+  margin: 0;
+}
+#notifier #help div p {
+  text-align: left;
+  line-height: 1.5em;
+}
+#notifier #help div a#notifierHide {
+  font-weight: bold;
+  line-height: 2em;
+}
+#notifier.hide {
+  top: -100%;
+  z-index: -1;
+}
+#notifier.hide #help > div {
+  border: 0;
+}
+#notifier.show {
+  z-index: 4;
+}
 .wrapper {
   height: 100%;
   width: 100%;
@@ -103,10 +144,6 @@ a:hover {
 #content #graph svg {
   background: #fff;
   shape-rendering: optimizeSpeed;
-}
-#content #graph svg .stream {
-  /*stroke: #fff;
-  stroke-width: 1px;*/
 }
 #content #graph svg .blur {
   opacity: 0.2;
